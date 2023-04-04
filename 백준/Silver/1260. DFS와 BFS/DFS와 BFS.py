@@ -18,7 +18,7 @@ def BFS(v):
     return visited
 
 V, E, v = map(int, input().split())
-graph = [[] for _ in range(V+1)]
+graph = {i: [] for i in range(1, V+1)}
 visited = []
 
 for _ in range(E):
@@ -26,7 +26,7 @@ for _ in range(E):
     graph[a].append(b)
     graph[b].append(a)
 for lst in graph:
-    lst.sort()
-
+    graph[lst].sort()
+    
 print(*DFS(v))
 print(*BFS(v))
