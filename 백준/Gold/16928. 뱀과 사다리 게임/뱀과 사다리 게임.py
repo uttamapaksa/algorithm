@@ -2,7 +2,7 @@ from collections import deque
 
 N, M = map(int, input().split())
 board = {i: i for i in range(1, 101)}
-visit = {i: 0 for i in range(1, 101)}
+visit = [0] * 101
 for _ in range(N + M):
     a, b = map(int, input().split())
     board[a] = b
