@@ -4,20 +4,19 @@ input = sys.stdin.readline
 
 N = int(input())
 tree = [[] for _ in range(N+1)]
-visit = [0] * (N+1)
 P = [0] * (N+1)
+
 for _ in range(N-1):
     a, b = map(int, input().split())
     tree[a].append(b)
     tree[b].append(a)
 
 q = deque([(1, tree[1])])
-visit[1] = 1
+P[1] = 1
 while q:
     v, child = q. popleft()
     for w in child:
-        if visit[w]: continue
-        visit[w] = 1
+        if P[w]: continue
         P[w] = v
         q.append((w, tree[w]))
 
