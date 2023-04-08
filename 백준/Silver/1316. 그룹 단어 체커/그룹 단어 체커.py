@@ -1,13 +1,7 @@
-n = int(input())
-ans = 0
-for _ in range(n):
-    word = input()
-    error = 0
-    for i in range(len(word)-1):
-        if word[i] != word[i+1]:
-            new_word = word[i+1:]
-            if new_word.count(word[i]) > 0:
-                error += 1
-    if error == 0:  
-        ans += 1
-print(ans)
+a = 0
+for _ in range(int(input())):
+    w = input()
+    for i in range(1, len(w)):
+        if w[i] != w[i-1] and w[i] in w[:i]: break
+    else: a += 1
+print(a)
