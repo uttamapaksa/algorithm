@@ -8,6 +8,9 @@ tmp = 0
 cnt = 0
 for i in range(N):
     cnt += 1
+    if cnt == ans:
+        tmp -= arr[i-cnt+1]
+        cnt -= 1
     tmp += arr[i]
     if tmp >= S:
         ans = min(ans, cnt)
