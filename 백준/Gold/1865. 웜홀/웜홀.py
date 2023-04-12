@@ -23,34 +23,33 @@ for _ in range(int(input())):
             graph[s][e] = min(-w, graph[s][e])
 
     def bellman_ford(start):
-        n = len(graph)
-        dist = {i: 250000000 for i in graph}
+        dist = [25000000] * (N+1)
+        visit = [0] * (N+1)
+        count = [0] * (N+1)
+
         dist[start] = 0
-        visit = {i: 0 for i in graph}
         visit[start] = 1
-        count = {i: 0 for i in graph}
         count[start] = 1
+        q = deque([start])
 
-        queue = deque([start])
-        while queue:
-            u = queue.popleft()
-            visit[u] = 0
+        while q:
+            s = q.popleft()
+            visit[s] = 0
+            for e, w in graph[s].items():
 
-            for v, w in graph[u].items():
-                if dist[u] + w < dist[v]:
-                    dist[v] = dist[u] + w
+                if dist[e] > dist[s] + w:
+                    dist[e] = dist[s] + w
 
-                    if not visit[v]:
-                        queue.append(v)
-                        visit[v] = 1
-                        count[v] += 1
+                    if not visit[e]:
+                        q.append(e)
+                        visit[e] = 1
+                        count[e] += 1
 
-                        if count[v] == n:
+                        if count[e] == N:
                             return 1
         return 0
 
-
-    for i in graph:
+    for i in range(1, N+1):
         if bellman_ford(i):
             print('YES')
             break
