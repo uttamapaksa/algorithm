@@ -24,10 +24,12 @@ for _ in range(int(input())):
                 visited[p] = visited[x] + time
                 queue.append(p)
 
-    cnt = total = 0
+    cnt = 0
+    total = 0
     for time in visited:
         if time != INF:
             cnt += 1
-            total = max(total, time)
+            if total < time:
+                total = time
 
     print(cnt, total)
