@@ -1,4 +1,5 @@
 from heapq import heappop, heappush
+import sys; input = sys.stdin.readline
 
 N, M, X = map(int, input().split())
 G = {i: [] for i in range(1, N+1)}
@@ -40,7 +41,7 @@ while Q:
             D[e] = t + w
             heappush(Q, (D[e], e))
 
-# X -> 전체, 전체 -> X 소요시간을 더해서 최댓값 갱신
+# X -> 모든 마을, 모든 마을 -> X 소요시간을 더해서 최댓값 갱신
 ans = 0
 for i in range(1, N+1):
     T[i] += D[i]
