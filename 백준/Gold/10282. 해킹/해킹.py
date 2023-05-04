@@ -1,30 +1,32 @@
-from heapq import heappop, heappush
+from collections import deque
 
 for _ in range(int(input())):
     n, d, c = map(int, input().split())
-    G = [[] for _ in range(n+1)]
+
+    G = [[] for _ in range(n + 1)]
+
     for _ in range(d):
         a, b, s = map(int, input().split())
-        G[b].append((s, a))
+        G[b].append((a, s))
 
-    D = [10000001] * (n+1)
-    D[c] = 0
-    V = set()
-    queue = [(0, c)]
+    INF = int(1e9)
+
+    queue = deque()
+    queue.append(c)
+    visited = [INF] * (n + 1)
+    visited[c] = 0
 
     while queue:
-        sw, s = heappop(queue)
-        if s in V: continue
-        V.add(s)
-        for ew, e in G[s]:
-            if D[e] > sw + ew:
-                D[e] = sw + ew
-                heappush(queue, (D[e], e))
+        x = queue.popleft()
 
-    cnt = 0
-    total = 0
-    for time in D:
-        if time != 10000001:
+        for p, time in G[x]:
+            if visited[p] > visited[x] + time:
+                visited[p] = visited[x] + time
+                queue.append(p)
+
+    cnt = total = 0
+    for time in visited:
+        if time != INF:
             cnt += 1
             total = max(total, time)
 
