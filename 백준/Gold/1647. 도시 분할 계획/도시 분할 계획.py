@@ -1,5 +1,3 @@
-from collections import deque
-
 N, M = map(int, input().split())
 P = [i for i in range(N+1)]
 G = []
@@ -13,16 +11,15 @@ def find(x):
         P[x] = find(P[x])
     return P[x]
 
-# sums = maxs = cnt = 0
-MST = []
+sums = maxs = cnt = 0
 for u, v, w in G:
+    if cnt == N-1: break
     u, v = find(u), find(v)
     if u != v:
         if u < v: P[v] = u
         else: P[u] = v
-        MST.append(w)
-        # cnt += 1
-        # sums += w
-        # maxs = max(maxs, w)
+        cnt += 1
+        sums += w
+        maxs = max(maxs, w)
 
-print(sum(MST) - max(MST))
+print(sums - maxs)
