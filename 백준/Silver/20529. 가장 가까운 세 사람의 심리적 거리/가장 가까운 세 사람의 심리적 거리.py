@@ -10,8 +10,8 @@ def solution():
         for j in range(i+1, n-1):
             B = arr[j]
             for k in range(j+1, n):
-                minv = min(minv, (len(set(A + B + arr[k])) - 4) * 2)
-    return minv
+                minv = min(minv, (len(set(A + B + arr[k]))))
+    return (minv - 4) * 2
 
 for _ in range(int(input())):
       print(solution())
