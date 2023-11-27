@@ -1,15 +1,23 @@
-import sys; input = sys.stdin.readline
+dr = (-1, 0, 1, 0)
+dc = (0, -1, 0, 1)
 
-R, C = map(int, input().split())
-arr = [[*input().rstrip()] for _ in range(R)]
-ans = 0
+n, m = map(int, input().split())
+arr = [list(map(ord, input())) for _ in range(n)]
+visit = {arr[0][0]}
+ans = 1
 
-q = {(0, 0, arr[0][0])}
-while q:
-    r, c, visit = q.pop()
-    for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-        if 0 <= nr < R and 0 <= nc < C and arr[nr][nc] not in visit:
-            q.add((nr, nc, visit + arr[nr][nc]))
-    ans = max(ans, len(visit))
+def dfs(r, c, k):
+    global ans
+    ans = max(ans , k)
+
+    for i in range(4):
+        nr, nc = r + dr[i], c + dc[i]
+        if 0 <= nr < n and 0 <= nc < m:
+            char = arr[nr][nc]
+            if char not in visit:
+                visit.add(char)
+                dfs(nr, nc, k+1)
+                visit.discard(char)
+dfs(0, 0, 1)
 
 print(ans)
