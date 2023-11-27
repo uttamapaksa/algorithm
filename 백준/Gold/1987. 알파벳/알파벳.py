@@ -12,12 +12,11 @@ def dfs(r, c, k):
 
     for i in range(4):
         nr, nc = r + dr[i], c + dc[i]
-        if 0 <= nr < n and 0 <= nc < m:
-            char = arr[nr][nc]
-            if char not in visit:
-                visit.add(char)
-                dfs(nr, nc, k+1)
-                visit.discard(char)
+        if nr < 0 or nr >= n or nc < 0 or nc >= m or arr[nr][nc] in visit: continue
+        visit.add(arr[nr][nc])
+        dfs(nr, nc, k+1)
+        visit.discard(arr[nr][nc])
+        
 dfs(0, 0, 1)
 
 print(ans)
