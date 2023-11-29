@@ -1,5 +1,5 @@
 text, pattern, ret = input(), [*input()], []
-m, l, go = len(pattern), 0, 1
+m, l = len(pattern), len(ret)
 match_range = range(-m, 0)
 
 for s in text:
@@ -12,7 +12,7 @@ for s in text:
                 go = 0
                 break
         else:
-            for i in match_range:
+            for _ in match_range:
                 ret.pop()
             l -= m
 
