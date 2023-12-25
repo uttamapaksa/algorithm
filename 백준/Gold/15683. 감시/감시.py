@@ -1,6 +1,5 @@
 N, M = map(int, input().split())
 arr = [[*map(int, input().split())] for _ in range(N)]
-wall = {(i, j) for i in range(N) for j in range(M) if arr[i][j] == 6}
 wall = sum(1 for r in arr for c in r if c == 6)
 cctv = [(arr[i][j], i, j) for i in range(N) for j in range(M) if 0 < arr[i][j] < 6]
 cctv_len = len(cctv)
@@ -15,11 +14,11 @@ def observe(d, r, c):
         r, c = r + dr, c + dc
     return nv
 
-# visible areas per cctv
+# visible areas per CCTV
 areas = {i: [] for i in range(cctv_len)}
-for i in range(len(cctv)):
+for i in range(cctv_len):
     n, r, c = cctv[i] # cctv_num, row, col
-    area = [observe(d, r, c) for d in range(4)] # visible areas set
+    area = [observe(d, r, c) for d in range(4)] # visible areas per direction
     if n == 1:
         for d in range(4):
             areas[i].append(area[d])
