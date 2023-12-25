@@ -1,6 +1,7 @@
 N, M = map(int, input().split())
 arr = [[*map(int, input().split())] for _ in range(N)]
 wall = {(i, j) for i in range(N) for j in range(M) if arr[i][j] == 6}
+wall = sum(1 for r in arr for c in r if c == 6)
 cctv = [(arr[i][j], i, j) for i in range(N) for j in range(M) if 0 < arr[i][j] < 6]
 cctv_len = len(cctv)
 delta = [(-1, 0), (0, 1), (1, 0), (0, -1)] # North, East, South, West
@@ -9,7 +10,7 @@ delta = [(-1, 0), (0, 1), (1, 0), (0, -1)] # North, East, South, West
 def observe(d, r, c):
     dr, dc = delta[d]
     nv = set()
-    while 0 <= r < N and 0 <= c < M and (r, c) not in wall:
+    while 0 <= r < N and 0 <= c < M and arr[r][c] != 6:
         nv.add((r, c))
         r, c = r + dr, c + dc
     return nv
@@ -45,4 +46,4 @@ def sol(v, k):
         sol(v | nv, k+1)
 sol(set(), 0)
 
-print(N * M - len(wall) - maxv)
+print(N * M - wall - maxv)
