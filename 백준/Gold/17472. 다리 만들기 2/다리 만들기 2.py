@@ -49,25 +49,17 @@ def find(x):
         P[x] = find(P[x])
     return P[x]
 
-# union
-def union(x, y):
-    a, b = find(x), find(y)
-    if a == b: return 0
-    elif a < b: P[b] = a
-    else: P[a] = b
-    return 1
-
 # Kruskal Algorithm
-G = [(D[i][j], i, j) for i in range(2, land_num+1) for j in range(2, land_num+1) if D[i][j] != 99]
+G = [(D[i][j], i, j) for i in range(2, land_num+1) for j in range(i+1, land_num+1) if D[i][j] != 99]
 G.sort()
 
 cnt = ans = 0
 for w, u, v in G:
-    if union(u, v):
-        cnt += 1
-        ans += w
-    if cnt == land_num - 2:
-        break
+    a, b = find(u), find(v)
+    if a == b: continue
+    P[a] = b
+    cnt += 1
+    ans += w
 
 if cnt == land_num - 2: print(ans)
 else: print(-1)
