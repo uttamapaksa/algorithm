@@ -40,7 +40,7 @@ def move_shark(j):
 def eat_shark():
     for r in range(R):
         for c in range(C):
-            if shark[r][c]:
+            if len(shark[r][c]) > 1:
                 shark[r][c].sort(key=lambda x: x[2], reverse=True)
                 shark[r][c] = [shark[r][c][0]]
 
