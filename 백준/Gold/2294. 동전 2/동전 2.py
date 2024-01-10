@@ -1,19 +1,13 @@
-N, M = map(int, input().split())
-dp = [float('inf')] * (M+1)
+n, k = map(int, input().split())
+coin = {int(input()) for _ in range(n)}
+INF = k+1
+dp = [0] + [INF] * k
 
-coins = []
-for _ in range(N):
-    coin = int(input())
-    if coin <= M:
-        coins.append(coin)
-        dp[coin] = 1
+for c in coin:
+    for j in range(c, k+1):
+        dp[j] = min(dp[j], dp[j-c]+1)
 
-for i in range(1, M+1):
-    for coin in coins:
-        if i - coin < 1 or dp[i-coin] == float('inf') : continue
-        dp[i] = min(dp[i], dp[i-coin]+1)
-
-if dp[i] == float('inf'):
+if dp[k] == INF:
     print(-1)
 else:
-    print(dp[M])
+    print(dp[k])
