@@ -1,25 +1,37 @@
-from itertools import permutations
+def operate(o1, o2, o3, o4, x, k): # brute force
+    if k == N: # 0 0 0 0
+        return
+    y = arr[k]
+    if o1 : dfs(o1-1, o2, o3, o4, x+y, k+1) 
+    if o2 : dfs(o1, o2-1, o3, o4, x-y, k+1) 
+    if o3 : dfs(o1, o2, o3-1, o4, x*y, k+1) 
+    if o4 : dfs(o1, o2, o3, o4-1, x//y if x >= 0 else -(-(x)//y),  k+1) 
+
+
+def dfs(o1, o2, o3, o4, x, k):
+    if (o1, o2, o3, o4) in memo_max: # maximum value memoization
+        if x > memo_max[(o1, o2, o3, o4)]:
+            memo_max[(o1, o2, o3, o4)] = x
+            operate(o1, o2, o3, o4, x, k)
+    else:
+        memo_max[(o1, o2, o3, o4)] = x
+        operate(o1, o2, o3, o4, x, k)
+    
+    if (o1, o2, o3, o4) in memo_min: # minimum value memoization
+        if x < memo_min[(o1, o2, o3, o4)]:
+            memo_min[(o1, o2, o3, o4)] = x
+            operate(o1, o2, o3, o4, x, k)
+    else:
+        memo_min[(o1, o2, o3, o4)] = x
+        operate(o1, o2, o3, o4, x, k)
+
 
 N = int(input())
 arr = [*map(int, input().split())]
-calc = []
-for i, c in enumerate([*map(int, input().split())]):
-    for _ in range(c):
-        calc.append(i)
+oper = tuple(map(int, input().split()))
+memo_max = {}
+memo_min = {}
 
-def plus(x, y): return x + y
-def minus(x, y): return x - y
-def multi(x, y): return x * y
-def divide(x, y): return x // y if x >= 0 else -(-(x) // y)
-calc_map = {0: plus, 1: minus, 2: multi, 3: divide}
-
-minv, maxv = 1000000000, -1000000000 
-for perm in permutations(calc):
-    tmp = arr[0]
-    for i in range(N-1):
-        tmp = calc_map[perm[i]](tmp, arr[i+1])
-    minv = min(minv, tmp)
-    maxv = max(maxv, tmp)
-
-print(int(maxv))
-print(int(minv))
+dfs(*oper, arr[0], 1)
+print(memo_max[(0, 0, 0, 0)])
+print(memo_min[(0, 0, 0, 0)])
