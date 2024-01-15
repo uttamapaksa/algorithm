@@ -1,8 +1,8 @@
 def find_and_delete_biggest_group():
-    find = 0
+    find = 0 # flag
     visit = set() # block_visit
     biggest_cnt = [0, 0, 0, 0] # block_cnt, rainbow_cnt, min_row, min_col
-    biggest_block = [] # elements
+    biggest_group = [] # elements
 
     for i in range(N):
         for j in range(N):
@@ -12,35 +12,41 @@ def find_and_delete_biggest_group():
             visit.add((i, j))
             r_visit = set() # rainbow_visit
             curr_cnt = [1, 0, i, j]
-            curr_block = [(i, j)]
+            curr_group = [(i, j)]
+
+            # dfs
             while stack:
                 r, c = stack.pop()
                 for dr, dc in delta:
                     nr, nc = r + dr, c + dc
-                    if nr < 0 or nr >= N or nc < 0 or nc >= N: continue # index
-                    if arr[nr][nc] == num: # same block 
+                    if nr < 0 or nr >= N or nc < 0 or nc >= N: continue # index error
+                    # same block 
+                    if arr[nr][nc] == num:
                         if (nr, nc) not in visit:
                             stack.append((nr, nc))
                             visit.add((nr, nc))
                             block_cnt, rainbow_cnt, min_row, min_col = curr_cnt
-                            curr_cnt = [block_cnt + 1, rainbow_cnt, *min((min_row, min_col), (nr, nc))]
-                            curr_block.append((nr, nc))
-                    elif not arr[nr][nc]: # rainbow
+                            curr_cnt = [block_cnt + 1, rainbow_cnt, *min((min_row, min_col), (nr, nc))] # update reference block
+                            curr_group.append((nr, nc))
+                    # rainbow block
+                    elif not arr[nr][nc]:
                         if (nr, nc) not in r_visit:
                             stack.append((nr, nc))
                             r_visit.add((nr, nc))
                             block_cnt, rainbow_cnt, min_row, min_col = curr_cnt
                             curr_cnt = [block_cnt + 1, rainbow_cnt + 1, min_row, min_col]
-                            curr_block.append((nr, nc))
+                            curr_group.append((nr, nc))
             
+            # upate biggest group
             if curr_cnt[0] > 1: # At least 2 blocks are required for a group
                 if biggest_cnt < curr_cnt:
                     biggest_cnt = curr_cnt
-                    biggest_block = curr_block
+                    biggest_group = curr_group
                 find = 1
 
-    if find: # delete biggest_block
-        for nr, nc in biggest_block:
+    # delete biggest group
+    if find:
+        for nr, nc in biggest_group:
             arr[nr][nc] = -2
         ans[0] += biggest_cnt[0] ** 2
     return find
@@ -53,10 +59,11 @@ def gravity():
             nr = i + 1
             while nr < N and arr[nr][j] == -2:
                 arr[nr][j], arr[nr - 1][j] = arr[nr - 1][j], arr[nr][j]
-                nr += 1 
+                nr += 1
 
 
 def rotate():
+    # rotate the array counterclockwise
     new_arr = [*map(list, [*zip(*arr)])]
     for i in range(N):
         arr[i] = new_arr[N-i-1]
