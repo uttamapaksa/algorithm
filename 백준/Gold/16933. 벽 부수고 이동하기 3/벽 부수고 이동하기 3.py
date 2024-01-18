@@ -26,7 +26,14 @@ def bfs():
                         visit[k-1][nr][nc] = cnt+1
                         queue.append((k-1, nr, nc, cnt+1))
                     else: # even: night
-                        queue.append((k, r, c, cnt+1))
+                        for dr, dc in delta:
+                            nnr, nnc = nr + dr, nc + dc
+                            if nnr < 0 or nnr >= N or nnc < 0 or nnc >= M or (nnr, nnc) == (r, c):
+                                continue
+                            if visit[k][nnr][nnc]:
+                                break
+                        else:
+                            queue.append((k, r, c, cnt+1))
 
     return -1
 
