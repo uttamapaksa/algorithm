@@ -20,4 +20,5 @@ for (const [
     u, v] of input) graph[u].push(v), graph[v].push(u)
 
 dfs(1)
-console.log(dp[1][0] > dp[1][1] ? `${dp[1][0]}\n${dp[1][2].sort((a,b)=>a-b).join(' ')}` : `${dp[1][1]}\n${dp[1][3].sort((a,b)=>a-b).join(' ')}`)
+const idx = Number(dp[1][0] < dp[1][1])
+console.log(`${dp[1][idx]}\n${(dp[1][idx+2] as number[]).sort((a,b)=>a-b).join(' ')}`)
