@@ -16,8 +16,7 @@ var dp: [number, number, number[], number[]][] = Array.from({ length: N[0]+1 }, 
 var visit: number[] = Array(N[0]+1).fill(0)
 var graph: Record<number, number[]> = {}
 for (let i=1; i<N[0]+1; i++) graph[i] = []
-for (const [
-    u, v] of input) graph[u].push(v), graph[v].push(u)
+for (const [u, v] of input) graph[u].push(v), graph[v].push(u)
 
 dfs(1)
 const idx = Number(dp[1][0] < dp[1][1])
