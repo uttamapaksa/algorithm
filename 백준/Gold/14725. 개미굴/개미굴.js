@@ -9,11 +9,7 @@ function insert(str) {
 }
 
 function traverse(n, trie) {
-  let nodes = []
-  for (const key in trie) {
-    nodes.push(key)
-  }
-  nodes = nodes.sort()
+  const nodes = Object.keys(trie).sort()
   for (const node of nodes) {
     ans += `${'--'.repeat(n)}${node}\n`
     traverse(n + 1, trie[node])
