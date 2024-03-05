@@ -1,0 +1,1 @@
+let N=BigInt(2**+require('fs').readFileSync(0).toString()+1);console.log(`${N*N}`)
