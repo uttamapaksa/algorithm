@@ -1,0 +1,2 @@
+const [_, ...nums]: number[][] = require('fs').readFileSync(process.platform==='linux'?0:'input.txt').toString().trim().split('\n').map((x:string)=>x.trim().split(' ').map(Number))
+const x = nums.map((e: number[])=>e[0]); const y = nums.map((e: number[])=>e[1]);console.log((Math.max(...x) - Math.min(...x)) * (Math.max(...y) - Math.min(...y)))
