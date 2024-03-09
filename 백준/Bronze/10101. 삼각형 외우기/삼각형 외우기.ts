@@ -1,0 +1,7 @@
+const input: number[] = require('fs').readFileSync(process.platform==='linux'?0:'input.txt').toString().trim().split('\n').map(Number)
+const [a, b, c] = input.sort((a,b)=>a-b)
+if (!c || (a+b+c) !== 180) console.log('Error')
+else if (a === b || b === c) 
+  if (a === c) console.log('Equilateral')
+  else console.log('Isosceles')
+else console.log('Scalene')
