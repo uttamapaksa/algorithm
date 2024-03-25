@@ -22,6 +22,7 @@ function dfs(k: number, r: number, c: number) {
     ans = k;
     return;
   }
+  if (k === 3) return;
 
   for (let nr = r; nr <= H; nr++) {
     for (let nc = 1; nc < N; nc++) {
