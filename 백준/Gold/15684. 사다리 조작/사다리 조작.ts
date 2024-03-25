@@ -22,12 +22,12 @@ function dfs(k: number, r: number, c: number) {
     ans = k;
     return;
   }
-  if (k === 3) return;
 
   for (let nr = r; nr <= H; nr++) {
     for (let nc = 1; nc < N; nc++) {
       // prev line, curr line, next line already exists
       if (arr[nr][nc-1] || arr[nr][nc] || arr[nr][nc+1]) continue;
+      if (k+1 >= ans) return;
       arr[nr][nc] = true;
       dfs(k+1, nr, nc);
       arr[nr][nc] = false;
