@@ -1,18 +1,17 @@
 const input = require('fs').readFileSync(process.platform==='linux'?0:'input.txt').toString().trim().split('\n');
-const [N, K]: number[] = input[0].split(' ').map(Number);
-const nums: number[] = input[1].split('').map(Number);
-const stack: number[] = [];
-let minusCount = K;
+let [N, K]: number[] = input[0].split(' ').map(Number);
+const nums: string[] = input[1].split('');
+const stack: string[] = [];
 
-for (let i = 0; i < N; i++) {
-  while (minusCount && stack.length && (stack[stack.length-1] < nums[i])) {
+for (const num of nums) {
+  while (K && stack.length && (stack[stack.length-1] < num)) {
     stack.pop();
-    minusCount--;
+    K--;
   }
-  stack.push(nums[i]);
+  stack.push(num);
 }
 
-while (minusCount--) {
+while (K--) {
   stack.pop();
 }
 
