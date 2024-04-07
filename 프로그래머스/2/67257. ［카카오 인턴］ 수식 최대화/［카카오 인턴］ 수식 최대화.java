@@ -44,16 +44,16 @@ class Solution {
         numsCopy = new long[N];
         
         long answer = 0L;
-        for (String[] o: new String[][]{{"*","+","-"}, {"*","-","+"}, {"+","*","-"}, {"+","-","*"}, {"-","*","+"}, {"-","+","*"}}) {
+        for (String[] orders: new String[][]{{"*","+","-"}, {"*","-","+"}, {"+","*","-"}, {"+","-","*"}, {"-","*","+"}, {"-","+","*"}}) {
             for (int i=0; i<N; i++) {
                 P[i] = i;
             }
             for (int i=0; i<N; i++) {
                 numsCopy[i] = nums.get(i);
             }
-            for (int i=0; i<3; i++) {
+            for (String order: orders) {
                 for (int j=0; j<N-1; j++) {
-                    if (!opers.get(j).equals(o[i])) continue;
+                    if (!opers.get(j).equals(order)) continue;
                     
                     long result;
                     if (opers.get(j).equals("*")) result = numsCopy[find(j)] * numsCopy[find(j+1)];
@@ -65,8 +65,7 @@ class Solution {
             }
             answer = Math.max(answer, Math.abs(numsCopy[0]));
         }
-        
+    
         return answer;
     }
 }
-
