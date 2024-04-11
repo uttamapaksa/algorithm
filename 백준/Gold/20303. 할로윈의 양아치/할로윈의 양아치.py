@@ -7,11 +7,12 @@ def find(x):
 def union(x, y):
     a, b = find(x), find(y)
     if a == b:
-        return 
-    if a < b:
-        P[b] = a
-    else:
-        P[a] = b
+        return
+    if a > b:
+        a, b = b, a
+    P[b] = a
+    candies[a] += candies[b]
+    cnts[a] += cnts[b]
 
 
 N, M, K = map(int, input().split())
@@ -23,18 +24,10 @@ for _ in range(M):
     u, v = map(int, input().split())
     union(u-1, v-1)
 
-for u in range(N):
-    root = find(u)
-    if u != root:
-        candies[root] += candies[u]
-        cnts[root] += cnts[u]
-
-cnt_candy = []
-for root in set(P):
-    cnt_candy.append((cnts[root], candies[root]))
-
 dp = [0] * K
-for cnt, candy in cnt_candy:
+P = {find(u) for u in P}
+for root in P:
+    cnt, candy = cnts[root], candies[root]
     for i in range(K-1, cnt-1, -1):
         dp[i] = max(dp[i], dp[i-cnt] + candy)
 
