@@ -6,6 +6,8 @@ def find(x):
 
 def union(x, y):
     a, b = find(x), find(y)
+    if a == b:
+        return 
     if a < b:
         P[b] = a
     else:
