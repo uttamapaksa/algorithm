@@ -1,0 +1,2 @@
+let [nums, scores]: number[][] = require("fs").readFileSync(process.platform==="linux"?0:"input.txt").toString().trim().split("\n").map((x:string)=>x.trim().split(" ").map(Number))
+console.log(scores.sort((a,b)=>b-a)[nums[1]-1])
