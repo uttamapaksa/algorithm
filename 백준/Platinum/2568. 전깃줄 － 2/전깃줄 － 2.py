@@ -1,12 +1,18 @@
 from bisect import bisect_left
 
+# static
+idxs = []
+vals = []
+dpi = [-1]
+dpv = [-1]
+
 # input
 N = int(input())
 arr = sorted(tuple(map(int, input().split())) for _ in range(N))  # idx, val
-vals = [v for _, v in arr]  # val
+for i, v in arr:
+    idxs.append(i)
+    vals.append(v)
 prev = list(range(N))  # prevIdx
-dpi = [-1]
-dpv = [-1]
 
 # dp
 for idx in range(N):
@@ -21,16 +27,13 @@ for idx in range(N):
         dpi[minIdx] = idx
         prev[idx] = dpi[minIdx - 1]
 
-# find LIS
+# find non LIS
+nonLIS = set(idxs)
 idx = dpi[-1]
-LIS = set()
 while idx != -1:
-    LIS.add(vals[idx])
+    nonLIS.remove(idxs[idx])
     idx = prev[idx]
 
 # output
-answer = f"{N - len(LIS)}"
-for i, v in arr:
-    if v not in LIS:
-        answer += f"\n{i}"
+answer = f"{len(nonLIS)}\n" + "\n".join(tuple(map(str, sorted(nonLIS))))
 print(answer)
