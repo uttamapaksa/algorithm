@@ -2,18 +2,17 @@ from bisect import bisect_left
 
 N = int(input())
 arr = list(map(int, input().split()))
-dp = [1] * (N)
+dp = [1]
 dpmin = [0, 1e8]
-dpminkey = {1: 1e8}
+L = 2 # length of dpmin
 
-for i in range(N):
-    min_idx = bisect_left(dpmin, arr[i])
-    if min_idx not in dpminkey: # max
-        dpmin.append(arr[i])
-        dpminkey[min_idx] = arr[i]
-    elif dpmin[min_idx] > arr[i]: # bigger
-        dpmin[min_idx] = arr[i]
-        dpminkey[min_idx] = arr[i]
-    dp[i] = min_idx
+for num in arr:
+    min_idx = bisect_left(dpmin, num)
+    if L == min_idx: # max. index error
+        dpmin.append(num)
+        L += 1
+    elif dpmin[min_idx] > num: # bigger
+        dpmin[min_idx] = num
+    dp.append(min_idx)
 
 print(max(dp))
