@@ -1,5 +1,3 @@
-from heapq import heappush, heappop
-
 # find
 def find(x):
     if P[x] != x:
@@ -38,14 +36,15 @@ zArr.sort()
 heap = []
 for planet in range(N-1):
     # heappush w, u, v
-    heappush(heap, (xArr[planet+1][0] - xArr[planet][0], xArr[planet+1][1], xArr[planet][1]))
-    heappush(heap, (yArr[planet+1][0] - yArr[planet][0], yArr[planet+1][1], yArr[planet][1]))
-    heappush(heap, (zArr[planet+1][0] - zArr[planet][0], zArr[planet+1][1], zArr[planet][1]))
+    heap.append((xArr[planet+1][0] - xArr[planet][0], xArr[planet+1][1], xArr[planet][1]))
+    heap.append((yArr[planet+1][0] - yArr[planet][0], yArr[planet+1][1], yArr[planet][1]))
+    heap.append((zArr[planet+1][0] - zArr[planet][0], zArr[planet+1][1], zArr[planet][1]))
+heap.sort(reverse=True)
 
 # kruskal
 answer = 0
 while heap:
-    w, u, v = heappop(heap)
+    w, u, v = heap.pop()
     answer += union(w, u, v)
 
 # output
