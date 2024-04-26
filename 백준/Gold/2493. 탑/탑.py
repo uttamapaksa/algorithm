@@ -1,13 +1,16 @@
-from heapq import heappush, heappop
-
 N = int(input())
 arr = [*map(int, input().split())]
 answer = [0] * N
 
-heap = []
-for i in range(N-1, -1, -1):
-    while heap and arr[i] > heap[0][0]:
-        answer[heappop(heap)[1]] = i+1
-    heappush(heap, (arr[i], i))
+stack = [(1000000001, -1)]
+for i in range(N):
+    while stack and stack[-1][0] < arr[i]:
+        idx = stack.pop()[1]
+        answer[idx] = stack[-1][1] + 1
+    stack.append((arr[i], i))
+
+for _ in range(len(stack) - 1):
+    idx = stack.pop()[1]
+    answer[idx] = stack[-1][1] + 1
 
 print(*answer)
