@@ -1,23 +1,20 @@
 from itertools import combinations
 
+
 def sol():
     if K < 0:
         return 0
 
-    # words except 'a, n, t, i, c'
     antatica = {'a', 'n', 't', 'i', 'c'}
-    words = []
+    words = []  # all words convert to numbers
+    total = set()  # all inputted alphabets
     for _ in range(N):
-        word = set()
+        word = 0
         for c in input():
-            if c not in antatica:
-                word.add(c)
+            if c not in antatica:  # except 'a, n, t, i, c'
+                word |= 1 << ord(c) - 97
+                total.add(1 << ord(c) - 97)
         words.append(word)
-
-    # all inputted alphabets
-    total = set()
-    for word in words:
-        total |= word
 
     # can teach any alphabet
     if len(total) <= K:
@@ -26,10 +23,10 @@ def sol():
     # all combinations of inputted alphabets
     ans = 0
     for comb in combinations(total, K):
-        comb = set(comb)
         tmp = 0
+        comb = sum(comb)
         for word in words:
-            if word.issubset(comb):
+            if comb & word == word:
                 tmp += 1
         if ans < tmp:
             ans = tmp
