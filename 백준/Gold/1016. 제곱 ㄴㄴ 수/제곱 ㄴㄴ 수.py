@@ -1,9 +1,7 @@
-mn, mx = map(int, input().split())
-prime = set(range(mn, mx+1))
-
-for i in range(2, int(mx**0.5)+1):
-    sqr = i**2
-    for div in range((mn-1) // sqr + 1, mx // sqr + 1):
-        prime.discard(sqr * div)
-
-print(len(prime))
+n,x=map(int,input().split())
+p=set(range(n,x+1))
+for i in range(2,int(x**0.5)+1):
+    s=i**2
+    for d in range((n-1)//s+1,x//s+1):
+        p.discard(s*d)
+print(len(p))
