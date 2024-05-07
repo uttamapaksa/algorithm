@@ -11,5 +11,5 @@ WITH a AS (
 
 SELECT a.MONTH, a.car_id, count(*) as RECORDS
 FROM a join b on a.car_id = b.car_id
-group by concat(a.car_id, '-', a.MONTH)
+group by a.car_id, a.MONTH
 order by a.month asc, a.car_id desc
