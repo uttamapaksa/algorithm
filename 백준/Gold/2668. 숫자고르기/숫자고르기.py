@@ -2,7 +2,7 @@ def cycle(r):
     global ans
     visit = set()
     u = r
-    while u not in visit:
+    while u not in visit and u not in ans:
         visit.add(u)
         u = arr[u]
     if r == u:
@@ -10,7 +10,6 @@ def cycle(r):
 
 n = int(input())
 arr = [0] + [int(input()) for _ in range(n)]
-
 ans = set()
 
 for i in range(1, n+1):
@@ -18,5 +17,4 @@ for i in range(1, n+1):
     cycle(i)
 
 print(len(ans))
-for v in sorted(ans):
-    print(v)
+print('\n'.join(map(str, sorted(ans))))
