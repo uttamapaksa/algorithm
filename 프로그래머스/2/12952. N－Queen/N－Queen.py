@@ -1,7 +1,5 @@
 def solution(n):
-    arr = [[0] * n for _ in range(n)]
     ans = 0
-    
     rdv = [0] * (2*n)
     ldv = [0] * (2*n)
     cv = [0] * n
