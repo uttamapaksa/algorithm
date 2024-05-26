@@ -11,15 +11,13 @@ for r in range(N):
     stack = [(r, 0)]
     while stack:
         r, c = stack.pop()
-        if arr[r][c]:
-            continue
         arr[r][c] = 1
         if c == M-1:
             ans += 1
             break
+        # (r-1, c+1) comes last in the greedy algorithm
         for nr, nc in ((r+1, c+1), (r, c+1), (r-1, c+1)):
             if 0 <= nr < N and 0 <= nc < M and not arr[nr][nc]:
-                stack.append((nr, nc))
                 stack.append((nr, nc))
 
 print(ans)
