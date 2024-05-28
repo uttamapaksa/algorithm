@@ -11,8 +11,8 @@ def solution(name):
         while next < n and name[next] == 'A':
             next += 1
         right_back_left = i + i + n - next 
-        left_back_rigth = n - next + n - next + i
-        leftright = min(leftright, right_back_left, left_back_rigth)
+        left_back_right = n - next + n - next + i
+        leftright = min(leftright, right_back_left, left_back_right)
     ans += leftright
 
     return ans
