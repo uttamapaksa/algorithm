@@ -12,16 +12,14 @@ def solution(grid):
                 if visit[i][j][k]: continue
                 start = (i, j, k)  # start
                 ci, cj, ck = start  # curr
-                visit[ci][cj][ck] = 1  # visit
-                cnt = 0  # cnt
+                visit[ci][cj][ck] = 1
+                cnt = 0
                 while True:
                     ni, nj = (ci + delta[ck][0]) % n, (cj + delta[ck][1]) % m  # next
                     nk = (ck + strdelta[grid[ni][nj]]) % 4
                     cnt += 1
                     if (ni, nj, nk) == start:
                         answer.append(cnt)
-                        break
-                    if visit[ni][nj][nk]:
                         break
                     ci, cj, ck = ni, nj, nk
                     visit[ci][cj][ck] = 1
