@@ -1,4 +1,4 @@
-from heapq import heappush, heappop
+from heapq import heapify, heappush, heappop
 
 def solution(operations):
     minh = []
@@ -14,11 +14,11 @@ def solution(operations):
         else:
             if not minh: continue
             if num == 1:
-                val = heappop(maxh)
-                minh.remove(-val)
+                minh.remove(-heappop(maxh))
+                heapify(minh)
             else:
-                val = heappop(minh)
-                maxh.remove(-val)
+                maxh.remove(-heappop(minh))
+                heapify(maxh)
     
     if not minh:
         return [0, 0]
