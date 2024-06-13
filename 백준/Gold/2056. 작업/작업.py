@@ -1,5 +1,3 @@
-from heapq import heappop, heappush
-
 N = int(input())
 task = [0] * (N+1)
 child = [[] for _ in range(N+1)]
@@ -13,18 +11,18 @@ for node in range(1, N+1):
     for par in tmp[2:]:
         child[par].append(node)
 
-heap = []
+queue = []
 for node in range(1, N+1):
     if indegree[node]: continue
     finish[node] = task[node]
-    heappush(heap, (finish[node], node))  # time, node
+    queue.append((finish[node], node))  # time, node
 
-while heap:
-    time, curr = heappop(heap)
+while queue:
+    time, curr = queue.pop()
     for next in child[curr]:
+        finish[next] = max(finish[next], time + task[next])
         indegree[next] -= 1
         if not indegree[next]:
-            finish[next] = time + task[next]
-            heappush(heap, (finish[next], next))
+            queue.append((finish[next], next))  # time, node
 
-print(time)
+print(max(finish[1:]))
