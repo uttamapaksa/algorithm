@@ -1,7 +1,7 @@
 def dnq(r, c, w):
-    if not w:
-        return arr[r][c]
-    w //= 2
+    if w == 2:
+        return sorted((arr[r][c], arr[r+1][c], arr[r][c+1], arr[r+1][c+1]))[2]
+    w >>= 1
     return sorted((dnq(r, c, w), dnq(r+w, c, w), dnq(r, c+w, w), dnq(r+w, c+w, w)))[2]
 
 
