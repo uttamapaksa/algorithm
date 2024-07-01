@@ -1,11 +1,11 @@
 def solution(routes):
-    routes.sort(key=lambda x: (-x[1], x[0]))
+    routes.sort(key=lambda x: x[1])
     ans = 0
+    last_camera = -30001
     
-    while routes:
-        s, e = routes.pop()
-        ans += 1
-        while routes and routes[-1][0] <= e:
-            routes.pop()
-        
+    for route in routes:
+        if last_camera < route[0]:
+            ans += 1
+            last_camera = route[1]
+
     return ans
