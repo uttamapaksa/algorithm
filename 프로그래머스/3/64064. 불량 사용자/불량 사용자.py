@@ -17,8 +17,7 @@ def solution(users, bans):
                     break
             else:
                 curr.append(i)
-        if curr:
-            combs.append(curr)
+        combs.append(curr)
     
     k = len(combs)
     sets = set()
