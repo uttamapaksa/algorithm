@@ -6,18 +6,17 @@ def dfs(u):
     id += 1
     ids[u] = par = id
     stack.append(u)
-
+    
     for v in G[u]:
         if not ids[v]:
             par = min(par, dfs(v))
-        elif not finished[v]:
+        elif not scc_ids[v]:
             par = min(par, ids[v])
 
     if par == ids[u]:
         zero_indegrees.add(par)
         while 1:
             v = stack.pop()
-            finished[v] = 1
             scc_ids[v] = par
             if v == u:
                 break
@@ -35,9 +34,8 @@ for _ in range(int(input())):
     
     id = 0
     ids = [0] * (N+1)
-    stack = []
-    finished = [0] * (N+1)
     scc_ids = [0] * (N+1)
+    stack = []
     zero_indegrees = set()
 
     for u in range(1, N+1):
