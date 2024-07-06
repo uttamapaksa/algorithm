@@ -1,8 +1,8 @@
-import sys; sys.setrecursionlimit(10**5)
+import sys; sys.setrecursionlimit(10**5); input=sys.stdin.readline
 
 
 def dfs(u):
-    global id, scc_id
+    global id
     id += 1
     ids[u] = par = id
     stack.append(u)
@@ -14,12 +14,11 @@ def dfs(u):
             par = min(par, ids[v])
 
     if par == ids[u]:
-        scc_id += 1
-        indegrees[scc_id] = 0
+        zero_indegrees.add(par)
         while 1:
             v = stack.pop()
             finished[v] = 1
-            scc_ids[v] = scc_id
+            scc_ids[v] = par
             if v == u:
                 break
     
@@ -38,9 +37,8 @@ for _ in range(int(input())):
     ids = [0] * (N+1)
     stack = []
     finished = [0] * (N+1)
-    scc_id = 0
     scc_ids = [0] * (N+1)
-    indegrees = {}
+    zero_indegrees = set()
 
     for u in range(1, N+1):
         if not ids[u]:
@@ -49,10 +47,6 @@ for _ in range(int(input())):
     for u in range(1, N+1):
         for v in G[u]:
             if scc_ids[u] != scc_ids[v]:
-                indegrees[scc_ids[v]] += 1
+                zero_indegrees.discard(scc_ids[v])
 
-    ans = 0
-    for id in indegrees:
-        if not indegrees[id]:
-            ans += 1
-    print(ans)
+    print(len(zero_indegrees))
