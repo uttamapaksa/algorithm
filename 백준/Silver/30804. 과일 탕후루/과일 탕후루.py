@@ -1,20 +1,17 @@
 N = int(input())
 arr = [*map(int, input().split())]
-prev = [0, -1]  # idx, val
-post = [0, -1]  # idx, val
+pv = pi = nv = ni = 0
+ans = cnt = 0
 
-ans = 0
-cnt = 0
 for i in range(N):
-    if arr[i] != post[1]:
-        if arr[i] == prev[1]:
-            prev, post = [*post], [*prev]
-            post[0] = i
+    if arr[i] != nv:
+        if arr[i] == pv:
+            pv, pi, nv, ni = nv, ni, pv, i
         else:
-            prev = [*post]
-            post = [i, arr[i]]
-            cnt = i - prev[0]
+            pv, pi, nv, ni = nv, ni, arr[i], i
+            cnt = i - pi
     cnt += 1
-    ans = max(ans, cnt)
+    if ans < cnt:
+        ans = cnt
 
 print(ans)
