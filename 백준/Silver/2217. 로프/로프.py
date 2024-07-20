@@ -1,0 +1,1 @@
+print(max(v*i+v for i,v in enumerate(sorted((int(input())for _ in range(int(input()))),reverse=1))))
