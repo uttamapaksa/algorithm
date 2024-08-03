@@ -19,4 +19,4 @@ for (let i=1; i<len; i++) {
 }
 
 const [a, b]: number[] = cards[next[id]];
-console.log([Math.floor(a/K)+1, b].join(' '));
+console.log(`${Math.floor(a/K)+1} ${b}`);
