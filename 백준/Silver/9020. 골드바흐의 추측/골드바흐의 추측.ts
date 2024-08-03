@@ -1,18 +1,16 @@
-const prime = new Set(Array.from({length:10000}, (_,i) => i));
+const P = Array(10001).fill(1);
 for (let i=2; i<101; i++) {
   for (let j=i*i; j<10001; j+=i) {
-    if (prime.has(j)) {
-      prime.delete(j);
-    }
+    if (P[j]) P[j] = 0;
   }
 }
 
-const [N, ...arr]: number[] = require('fs').readFileSync(0).toString().split('\n').map((x:string)=>+x);
-for (const num of arr) {
-  for (let i=num/2; i>1; i--) {
-    if (prime.has(i) && prime.has(num-i)) {
-      console.log(`${i} ${num-i}`);
+const [_, ...A]: number[] = require('fs').readFileSync(0).toString().split('\n').map(x => +x);
+A.forEach(v => {
+  for (let i=v/2; i>1; i--) {
+    if (P[i] && P[v-i]) {
+      console.log(`${i} ${v-i}`);
       break;
     }
   }
-}
+})
