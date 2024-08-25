@@ -1,3 +1,4 @@
+import sys; input=sys.stdin.readline
 while 1:
     w, h = map(int, input().split())
     if not w+h: break
