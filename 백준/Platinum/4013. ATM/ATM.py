@@ -55,8 +55,13 @@ outback = [0] * (scc_id+1)
 for u in map(int, input().split()):
     outback[scc_ids[u]] = 1
 
-# Topological sort
+# memory cleanup
+G = 0
+ids = 0
 S = scc_ids[S]
+scc_ids = 0
+
+# Topological sort
 C = [0] * (scc_id+1)
 C[S] = scc_cost[S]
 can_go = [0] * (scc_id+1)
@@ -75,9 +80,15 @@ while Q:
             can_go[v] = 1
             C[v] = max(C[v], C[u] + scc_cost[v])
 
+scc_graph = 0
+scc_cost = 0
+can_go = 0
+Q = 0
+
 # output
 ans = 0
 for u in range(1, scc_id+1):
     if outback[u] and ans < C[u]:
         ans = C[u]
+C = 0
 print(ans)
