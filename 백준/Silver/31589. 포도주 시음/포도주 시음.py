@@ -1,5 +1,11 @@
 N, K = map(int, input().split())
 K = (K-1) // 2
-T = sorted([*map(int, input().split())])
-ans = sum(T[N-K-1:]) - sum(T[:K])
+T = [*map(int, input().split())]
+T.sort()
+
+ans = 0
+for i in range(K):
+    ans -= T[i]
+for i in range(N-K-1, N):
+    ans += T[i]
 print(ans)
