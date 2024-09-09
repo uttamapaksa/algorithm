@@ -1,4 +1,4 @@
-import sys; sys.setrecursionlimit(10001); input=sys.stdin.readline
+import sys; sys.setrecursionlimit(10000); input=sys.stdin.readline
 
 def find(x):
     if x != P[x]:
@@ -7,6 +7,7 @@ def find(x):
 
 V, E = map(int, input().split())
 P = [i for i in range(V+1)]
+R = [0] * (V + 1)
 G = []
 for _ in range(E):
     s, e, w = map(int, input().split())
@@ -18,8 +19,12 @@ for w, s, e in G:
     a, b = find(s), find(e)
     if a != b: 
         ans += w
-        if a > b:
-            a, b = b, a
-        P[b] = a
+        if R[a] > R[b]:
+            P[b] = a
+        elif R[a] < R[b]:
+            P[a] = b
+        else:
+            P[b] = a
+            R[a] += 1
 
 print(ans)
