@@ -28,4 +28,6 @@ for _ in range(M):
         while x:
             res += tree[x]
             x >>= 1
-        print(res)
+        ans.append(str(res))
+
+print('\n'.join(ans))
