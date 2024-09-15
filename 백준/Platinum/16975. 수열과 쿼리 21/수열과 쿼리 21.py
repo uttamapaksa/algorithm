@@ -1,27 +1,5 @@
 import sys; input = sys.stdin.readline
 
-
-def update(i, j, k):
-    l, r = i+size, j+size
-    while l <= r:
-        if l & 1:
-            tree[l] += k
-            l += 1
-        if not r & 1:
-            tree[r] += k
-            r -= 1
-        l >>= 1; r >>= 1
-
-
-def query(x):
-    res = arr[x]
-    x += size
-    while x:
-        res += tree[x]
-        x >>= 1
-    ans.append(str(res))
-
-
 N = int(input())
 arr = tuple(map(int, input().split()))
 M = int(input())
@@ -35,8 +13,19 @@ ans = []
 for _ in range(M):
     op = tuple(map(int, input().split()))
     if op[0] == 1:
-        update(op[1]-1, op[2]-1, op[3])
+        l, r, k = op[1]-1+size, op[2]-1+size, op[3]
+        while l <= r:
+            if l & 1:
+                tree[l] += k
+                l += 1
+            if not r & 1:
+                tree[r] += k
+                r -= 1
+            l >>= 1; r >>= 1
     else:
-        query(op[1]-1)
-
-print('\n'.join(ans))
+        x = op[1]-1+size
+        res = arr[x-size]
+        while x:
+            res += tree[x]
+            x >>= 1
+        print(res)
