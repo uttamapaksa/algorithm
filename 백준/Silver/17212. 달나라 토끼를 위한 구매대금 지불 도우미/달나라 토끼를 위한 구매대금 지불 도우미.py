@@ -1,20 +1,11 @@
-from collections import deque
-
 N = int(input())
-A = [0] * (N+1)
-D = (1, 2, 5, 7)
+coins = (1, 2, 5, 7)
+dp = [N] * (N+1)
+dp[0] = 0
 
-Q = deque([0])
-while Q:
-    u = Q.popleft()
-    for v in (u+7, u+5, u+2, u+1):
-        if v <= N and not A[v]:
-            A[v] = A[u] + 1
-            Q.append(v)
-            if v == N:
-                break
-    else:
-        continue
-    break
+for i in range(1, N+1):
+    for coin in coins:
+        if i >= coin:
+            dp[i] = min(dp[i], dp[i-coin] + 1)
 
-print(A[N])
+print(dp[N])
