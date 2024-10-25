@@ -1,6 +1,8 @@
+import sys; input=sys.stdin.readline
+
 def sol():
     N = int(input())
-    arr = [tuple(map(int, input().split())) for _ in range(N)]
+    arr = tuple(tuple(map(int, input().split())) for _ in range(N))
 
     for r in range(N):
         for c in range(N):
@@ -11,34 +13,27 @@ def sol():
         break
     zr, zc = r, c
 
-    sums = set()
+    full = sum(arr[0]) if zr else sum(arr[1])
     for r in range(N):
         if r == zr: continue
-        sums.add(sum(arr[r]))
+        if full != sum(arr[r]): return -1
     for c in range(N):
         if c == zc: continue
-        sums.add(sum(arr[r][c] for r in range(N)))
+        if full != sum(arr[r][c] for r in range(N)): return -1
     if (zr != zc):
-        sums.add(sum(arr[r][r] for r in range(N)))
+        if full != sum(arr[r][r] for r in range(N)): return -1
     if (zr + zc != N-1):
-        sums.add(sum(arr[r][N-1-r] for r in range(N)))
-    if len(sums) > 1:
-        return -1
-    sums = tuple(sums)[0]
+        if full != sum(arr[r][N-1-r] for r in range(N)): return -1
 
-    zsums = set()
-    zsums.add(sum(arr[zr]))
-    zsums.add(sum(arr[r][zc] for r in range(N)))
+    blank = sum(arr[zr])
+    if blank != sum(arr[r][zc] for r in range(N)): return -1
     if (zr == zc):
-        zsums.add(sum(arr[r][r] for r in range(N)))
+        if blank != sum(arr[r][r] for r in range(N)): return -1
     if (zr + zc == N-1):
-        zsums.add(sum(arr[r][N-1-r] for r in range(N)))
-    if len(zsums) > 1:
-        return -1
-    zsums = tuple(zsums)[0]
+        if blank != sum(arr[r][N-1-r] for r in range(N)): return -1
 
-    if (sums <= zsums):
-        return - 1
-    return sums - zsums 
+    if (full <= blank):
+        return -1
+    return full - blank 
 
 print(sol())
