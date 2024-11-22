@@ -1,24 +1,24 @@
-n, d, k, c = map(int, input().split())
-arr = [int(input()) for _ in range(n)] * 2
-curr = set()
-cnt = [0] * (d+1)
-for v in arr[:k]:
-    curr.add(v)
-    cnt[v] += 1
+import sys; input=sys.stdin.readline
 
-ans = len(curr)
+n, d, k, c = map(int, input().split())
+arr = tuple(int(input()) for _ in range(n))
+cnt = [0] * (d+1)
+total = 0
+for i in range(k):
+    cnt[arr[i]] += 1
+    if cnt[arr[i]] == 1:
+        total += 1
+
+ans = total
 for i in range(n):
-    if c not in curr:
-        ans = max(ans, len(curr) + 1)
-    else:
-        ans = max(ans, len(curr))
+    ans = max(ans, total+(1 if cnt[c]==0 else 0))
     v = arr[i]
     cnt[v] -= 1
     if cnt[v] == 0:
-        curr.remove(v)
-    v = arr[k+i]
+        total -= 1
+    v = arr[(k+i)%n]
     cnt[v] += 1
     if cnt[v] == 1:
-        curr.add(v)
+        total += 1
 
 print(ans)
