@@ -1,15 +1,11 @@
 function f1() {
     for (let r=0; r<N>>1; r++) {
-        const tmp = [...arr[r]];
-        arr[r] = [...arr[N-1-r]];
-        arr[N-1-r] = [...tmp];
+        [arr[r], arr[N-1-r]] = [arr[N-1-r], arr[r]]
     }
 }
 
 function f2() {
-    for (let r=0; r<N; r++) {
-        arr[r] = [...arr[r].reverse()]
-    }
+    arr.forEach(row => row.reverse())
 }
 
 function f3() {
@@ -36,58 +32,31 @@ function f4() {
 
 function f5() {
     const hN = N>>1, hM = M>>1
-    const newArr = Array.from({length:N}, ()=>Array(M).fill(0))
     for (let r=0; r<hN; r++) {
         for (let c=0; c<hM; c++) {
-            newArr[r][c] = arr[r+hN][c]
+            const tmp = arr[r][c];
+            arr[r][c] = arr[r + hN][c];
+            arr[r + hN][c] = arr[r + hN][c + hM];
+            arr[r + hN][c + hM] = arr[r][c + hM];
+            arr[r][c + hM] = tmp;
         }
     }
-    for (let r=0; r<hN; r++) {
-        for (let c=hM; c<M; c++) {
-            newArr[r][c] = arr[r][c-hM]
-        }
-    }
-    for (let r=hN; r<N; r++) {
-        for (let c=hM; c<M; c++) {
-            newArr[r][c] = arr[r-hN][c]
-        }
-    }
-    for (let r=hN; r<N; r++) {
-        for (let c=0; c<hM; c++) {
-            newArr[r][c] = arr[r][c+hM]
-        }
-    }
-    arr = newArr
 }
 
 function f6() {
     const hN = N>>1, hM = M>>1
-    const newArr = Array.from({length:N}, ()=>Array(M).fill(0))
     for (let r=0; r<hN; r++) {
         for (let c=0; c<hM; c++) {
-            newArr[r][c] = arr[r][c+hM]
+            const tmp = arr[r][c];
+            arr[r][c] = arr[r][c + hM];
+            arr[r][c + hM] = arr[r + hN][c + hM];
+            arr[r + hN][c + hM] = arr[r + hN][c];
+            arr[r + hN][c] = tmp;
         }
     }
-    for (let r=0; r<hN; r++) {
-        for (let c=hM; c<M; c++) {
-            newArr[r][c] = arr[r+hN][c]
-        }
-    }
-    for (let r=hN; r<N; r++) {
-        for (let c=hM; c<M; c++) {
-            newArr[r][c] = arr[r][c-hM]
-        }
-    }
-    for (let r=hN; r<N; r++) {
-        for (let c=0; c<hM; c++) {
-            newArr[r][c] = arr[r-hN][c]
-        }
-    }
-    arr = newArr
 }
 
-
-let [[N, M, _], ...arr] = require('fs').readFileSync(process.platform === 'linux' ? 0 : 'input.txt').toString().trim().split('\n').map((x) => x.split(' ').map(Number))
+let [[N, M, _], ...arr] = require('fs').readFileSync(0).toString().trim().split('\n').map((x) => x.split(' ').map(Number))
 const fns = [function(){}, f1, f2, f3, f4, f5, f6]
 const ops = arr.pop()
 
