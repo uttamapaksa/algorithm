@@ -1,35 +1,19 @@
-import sys; sys.setrecursionlimit(100000)
+def turn(s,i):
+    for j in (i-1,i,i+1):
+        if 0<=j<n:
+            s[j]^=1
 
-def turn(i):
-    for j in (i-1, i, i+1):
-        if 0 <= j < n:
-            s[j] ^= 1
-
-def check():
-    for j in range(n):
-        if s[j] != e[j]:
-            return 0
-    return 1
-
-def sol(i, k):
+def sol(k):
     global a
-    if k >= a:
-        return
-    if i >= 2 and s[i-2] != e[i-2]:
-        return
-    if i == n:
-        if check():
-            a = k
-        return
-    sol(i+1, k)
-    turn(i)
-    sol(i+1, k+1)
-    turn(i)
+    ns = [*s]
+    for i in range(2,n):
+        if ns[i-1]!=e[i-1]:
+            turn(ns,i)
+            k+=1
+    if ns[n-1]==e[n-1]:
+        a=min(a,k)
 
-n = int(input())
-s = [*map(int, input())]
-e = [*map(int, input())]
-a = 300000
-sol(0, 0)
-
-print(-1 if a == 300000 else a)
+n,s,e,a=int(input()),[*map(int,input())],[*map(int,input())],100001
+if s[0]==e[0]: sol(0);turn(s,0);turn(s,1);sol(2);turn(s,1);turn(s,0)
+else: turn(s,0);sol(1);turn(s,0);turn(s,1);sol(1);turn(s,1)
+print(-1 if a == 100001 else a)
